@@ -4,16 +4,27 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-icon name="swap-vertical-outline" size="large"></ion-icon>
-    <ion-select placeholder="Name A-Z">
-      <ion-select-option value="apple">Apple</ion-select-option>
-      <ion-select-option value="banana">Banana</ion-select-option>
-      <ion-select-option value="orange">Orange</ion-select-option>
-    </ion-select>
-    <ion-icon name="search-outline" size="large"></ion-icon>
-    <ion-input label="" placeholder="Search"></ion-input>
-  </ion-item>
+
+  <ion-grid class="ion-padding ng-pristine ng-valid md hydrated ng-touched">
+    <ion-row class="md hydrated">
+      <ion-col size="12" size-sm="6">
+      <ion-item>
+        <ion-icon name="swap-vertical" slot="start" role="img"></ion-icon>
+        <ion-select interface="popover" formcontrolname="sort">
+          <ion-select-option role="option" id="ion-selopt-22" class="md hydrated"> Created at (newest first) </ion-select-option>
+          <ion-select-option role="option" id="ion-selopt-24" class="md hydrated"> Name (A-Z) </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-item class="item-has-start-slot item md item-lines-default item-fill-none hydrated ion-pristine ion-valid ion-touched">
+          <ion-icon name="search" slot="start" role="img" ></ion-icon>
+          <ion-input maxlength="40" placeholder="Search" formcontrolname="name"></ion-input>
+        </ion-item>
+      </ion-col>
+      </ion-row>
+  </ion-grid>
+
   <ion-list lines="inset">
     <ion-item>
       <ion-label>Inset Lines</ion-label>
@@ -25,7 +36,11 @@
       <ion-label>Inset Lines</ion-label>
     </ion-item>
   </ion-list>
+
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end" >
+  <ion-fab-button >
+    <ion-icon name="add" role="img" class="md hydrated"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 </ion-content>
-
-
-
