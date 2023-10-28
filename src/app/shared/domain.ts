@@ -2,6 +2,14 @@
 // Paging
 // ------
 
+export interface SortCriteria {
+  sort: string;
+}
+
+export interface PagingCriteria extends SortCriteria {
+  page: number;
+  size: number;
+}
 export interface PagingCriteria {
   page: number;
   size: number;
@@ -34,6 +42,10 @@ export interface Category {
 }
 
 export interface CategoryCriteria extends PagingCriteria {
+  name?: string;
+}
+
+export interface AllCategoryCriteria extends SortCriteria {
   name?: string;
 }
 
