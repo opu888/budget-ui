@@ -11,11 +11,12 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {AuthInterceptor} from "./shared/interceptor/auth.interceptor";
+import {LoginComponent} from "./shared/login/login.component";
 
 registerLocaleData(locale);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     AppRoutingModule,
     AngularFireAuthModule,

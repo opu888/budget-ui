@@ -11,16 +11,6 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: categoriesPath,
-    loadChildren: () => import('./category/category.module').then((m) => m.CategoryModule),
-    title: 'Categories | Budget UI',
-  },
-  {
-    path: expensesPath,
-    loadChildren: () => import('./expense/expense.module').then((m) => m.ExpenseModule),
-    title: 'Expenses | Budget UI',
-  },
-  {
     path: loginPath,
     component: LoginComponent
   },
