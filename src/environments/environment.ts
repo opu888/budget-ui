@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  //backendUrl: '/api',
+  backendUrl: '/api',
   firebaseConfig: {
     apiKey: "AIzaSyCHKc-9GFvrbXMKLlgua2yAtgCibPLddh8",
     authDomain: "budget-planner-7eddb.firebaseapp.com",
