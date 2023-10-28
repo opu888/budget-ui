@@ -1,52 +1,56 @@
+<!-- ------ -->
+<!-- Header -->
+<!-- ------ -->
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Categories</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
 
-  <ion-grid class="ion-padding ng-pristine ng-valid md hydrated ng-touched">
-    <ion-row class="md hydrated">
+<!-- ------- -->
+<!-- Content -->
+<!-- ------- -->
+<ion-content>
+  <!-- Search & sort -->
+  <ion-grid class="ion-padding">
+    <ion-row>
       <ion-col size="12" size-sm="6">
         <ion-item>
-          <ion-icon name="swap-vertical" slot="start" role="img"></ion-icon>
-          <ion-select interface="popover" formcontrolname="sort">
-            <ion-select-option role="option" id="ion-selopt-22" class="md hydrated"> Created at (newest first)
-            </ion-select-option>
-            <ion-select-option role="option" id="ion-selopt-24" class="md hydrated"> Name (A-Z)</ion-select-option>
+          <ion-icon name="swap-vertical" slot="start"></ion-icon>
+          <ion-select interface="popover" value="Name (A-Z)">
+            <ion-select-option>Created at (newest first)</ion-select-option>
+            <ion-select-option>Created at (oldest first)</ion-select-option>
+            <ion-select-option>Name (A-Z)</ion-select-option>
+            <ion-select-option>Name (Z-A)</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
       <ion-col size="12" size-sm="6">
-        <ion-item
-          class="item-has-start-slot item md item-lines-default item-fill-none hydrated ion-pristine ion-valid ion-touched">
-          <ion-icon name="search" slot="start" role="img"></ion-icon>
-          <ion-input maxlength="40" placeholder="Search" formcontrolname="name"></ion-input>
+        <ion-item>
+          <ion-icon name="search" slot="start"></ion-icon>
+          <ion-input maxlength="40" placeholder="Search" [clearInput]="true"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-list lines="inset">
-    <ion-item>
-      <ion-label>Inset Lines</ion-label>
+  <!-- Category list -->
+  <ion-list inset="true">
+
+    <!-- Categories -->
+    <ion-item button="true" [detail]="true" (click)="openModal()">
+      <ion-label>Auswärts Essen</ion-label>
     </ion-item>
-    <ion-item>
-      <ion-label>Inset Lines</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Inset Lines</ion-label>
-    </ion-item>
+
   </ion-list>
 
-
-  <ion-fab id="add-category" slot="fixed" vertical="bottom" horizontal="end">
+  <!-- Create fab button -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="openModal()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-
 </ion-content>
-
-
