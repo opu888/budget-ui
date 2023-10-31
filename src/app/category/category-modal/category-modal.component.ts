@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ActionSheetService } from '../../shared/service/action-sheet.service';
-import {filter, finalize, from, pipe} from 'rxjs';
+import {filter, finalize, from, mergeMap, pipe, tap} from 'rxjs';
 import {FormGroup, Validators} from "@angular/forms";
 import {ToastService} from "../../shared/service/toast.service";
 import {FormBuilder} from "@angular/forms";
 import {CategoryService} from "../category.service";
-import {save} from "ionicons/icons"; [CategoryService]
+import {save} from "ionicons/icons";
+import {Category} from "../../shared/domain"; [CategoryService]
 
 @Component({
   selector: 'app-category-modal',
@@ -16,6 +17,10 @@ export class CategoryModalComponent {
 
   readonly categoryForm: FormGroup;
   submitting = false;
+
+  // Passed into the component by the ModalController, available in the ionViewWillEnter
+  category: Category = {} as Category;
+
   constructor(
     private readonly actionSheetService: ActionSheetService,
     private readonly categoryService: CategoryService,
@@ -23,9 +28,10 @@ export class CategoryModalComponent {
     private readonly modalCtrl: ModalController,
     private readonly toastService: ToastService,
   ) {
-    this.categoryForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(40)]],
-    });
+      this.categoryForm = this.formBuilder.group({
+          id: [], // hidden
+          name: ['', [Validators.required, Validators.maxLength(40)]],
+      });
   }
 
 
@@ -49,11 +55,24 @@ export class CategoryModalComponent {
 
   delete(): void {
     from(this.actionSheetService.showDeletionConfirmation('Are you sure you want to delete this category?'))
-      .pipe(filter((action) => action === 'delete'))
+      .pipe(
+        filter((action) => action === 'delete'),
+        tap(() => (this.submitting = true)),
+        mergeMap(() => this.categoryService.deleteCategory(this.category.id!)),
+        finalize(() => (this.submitting = false)),
+      )
       .subscribe({
         next: () => {
-          this.modalCtrl.dismiss(null, 'delete');
+          this.toastService.displaySuccessToast('Category deleted');
+          this.modalCtrl.dismiss(null, 'refresh');
         },
+        error: (error) => this.toastService.displayErrorToast('Could not delete category', error),
       });
   }
+
+    ionViewWillEnter(): void {
+        this.categoryForm.patchValue(this.category);
+    }
+
+
 }
