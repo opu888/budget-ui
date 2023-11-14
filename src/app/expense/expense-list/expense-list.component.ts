@@ -11,11 +11,16 @@ import { Expense } from '../../shared/domain';
 export class ExpenseListComponent {
   date = set(new Date(), { date: 1 });
 
+  changeMonth(monthDelta: number): void {
+    this.date = addMonths(this.date, monthDelta);
+  }
+
   constructor(private readonly modalCtrl: ModalController) {}
 
   addMonths = (number: number): void => {
     this.date = addMonths(this.date, number);
   };
+  loading: any;
 
   async openModal(expense?: Expense): Promise<void> {
     const modal = await this.modalCtrl.create({
