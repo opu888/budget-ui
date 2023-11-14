@@ -1,1 +1,53 @@
-Expense Modal
+<!-- ------ -->
+<!-- Header -->
+<!-- ------ -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Cancel
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Add Expense</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">
+        <ion-icon slot="start" name="save"></ion-icon>
+        Save
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<!-- ------- -->
+<!-- Content -->
+<!-- ------- -->
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-icon name="text" slot="start"></ion-icon>
+    <ion-input maxlength="40" placeholder="Enter the expense's name" required></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon name="pricetag" slot="start"></ion-icon>
+    <ion-select interface="popover" placeholder="Category">
+      <ion-select-option>Test</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-icon name="swap-vertical" slot="start"></ion-icon>
+    <ion-select interface="popover" value="Date (newest first)">
+      <ion-select-option>Created at (newest first)</ion-select-option>
+      <ion-select-option>Created at (oldest first)</ion-select-option>
+      <ion-select-option>Name (A-Z)</ion-select-option>
+      <ion-select-option>Name (Z-A)</ion-select-option>
+      <ion-select-option>Date (newest first)</ion-select-option>
+      <ion-select-option>Date (oldest first)</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+</ion-content>
