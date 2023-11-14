@@ -32,22 +32,27 @@
   </ion-item>
   <ion-item>
     <ion-icon name="pricetag" slot="start"></ion-icon>
-    <ion-select interface="popover" placeholder="Category">
+    <ion-select interface="popover" placeholder="Choose a category">
       <ion-select-option>Test</ion-select-option>
     </ion-select>
+      <ion-button slot="end" (click)="showCategoryModal()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
   </ion-item>
-
-
   <ion-item>
-    <ion-icon name="swap-vertical" slot="start"></ion-icon>
-    <ion-select interface="popover" value="Date (newest first)">
-      <ion-select-option>Created at (newest first)</ion-select-option>
-      <ion-select-option>Created at (oldest first)</ion-select-option>
-      <ion-select-option>Name (A-Z)</ion-select-option>
-      <ion-select-option>Name (Z-A)</ion-select-option>
-      <ion-select-option>Date (newest first)</ion-select-option>
-      <ion-select-option>Date (oldest first)</ion-select-option>
-    </ion-select>
+    <ion-icon name="cash" slot="start"></ion-icon>
+    <ion-input maxlength="40" placeholder="Enter the amount in CHF" required></ion-input>
+    <ion-note slot="end">CHF</ion-note>
   </ion-item>
+  <ion-item>
+    <ion-icon name="calendar" slot="start"></ion-icon>
+    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime id="datetime" presentation="date" [showDefaultButtons]="true"><span slot="title">ENTER THE DATE OF THE EXPENSE</span></ion-datetime>
+      </ng-template>
+    </ion-modal>
+  </ion-item>
+
 
 </ion-content>
