@@ -22,7 +22,10 @@
       <ion-col size="12" size-sm="4">
         <ion-item>
           <ion-icon name="swap-vertical" slot="start"></ion-icon>
-          <ion-select interface="popover" value="Date (newest first)">
+          <ion-select interface="popover" formControlName="sort">
+            <ion-select-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">
+              {{sortOption.label}}
+            </ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -41,7 +44,7 @@
       <ion-col size="12" size-sm="4">
         <ion-item>
           <ion-icon name="search" slot="start"></ion-icon>
-          <ion-input maxlength="40" placeholder="Search" [clearInput]="true"></ion-input>
+          <ion-input maxlength="40" placeholder="Search" formControlName="name" [clearInput]="true"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>

@@ -9,7 +9,7 @@ import {
   ExpenseCriteria,
   ExpenseUpsertDto,
   SortOption,
-  CategoryCriteria, Category
+  CategoryCriteria, Category, AllExpenseCriteria
 } from "../shared/domain";
 
 @Injectable({ providedIn: 'root' })
@@ -21,9 +21,11 @@ export class ExpenseService {
 
   // Search
 
-  getExpenses = (pagingCriteria: ExpenseCriteria): Observable<Page<Expense>> =>
-    this.httpClient.get<Page<Expense>>(this.apiUrl, { params: new HttpParams({ fromObject: { ...pagingCriteria } }) });
+  getExpenses = (pagingExpense: ExpenseCriteria): Observable<Page<Expense>> =>
+    this.httpClient.get<Page<Expense>>(this.apiUrl, { params: new HttpParams({ fromObject: { ...pagingExpense } }) });
 
+  getAllExpenses = (sortCriteria: AllExpenseCriteria): Observable<Expense[]> =>
+      this.httpClient.get<Expense[]>(this.apiV2Url, { params: new HttpParams({ fromObject: { ...sortCriteria } }) });
 
   // Create & Update
 

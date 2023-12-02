@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { addMonths, set } from 'date-fns';
 import {InfiniteScrollCustomEvent, ModalController, RefresherCustomEvent} from '@ionic/angular';
 import { ExpenseModalComponent } from '../expense-modal/expense-modal.component';
-import {Category, Expense, ExpenseCriteria} from '../../shared/domain';
+import {Category, Expense, ExpenseCriteria, SortOption} from '../../shared/domain';
 import {DatePipe} from "@angular/common";
 import {CategoryService} from "../../category/category.service";
 import {ExpenseService} from "../expense.service";
@@ -10,8 +10,6 @@ import {ToastService} from "../../shared/service/toast.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {debounce, finalize, from, groupBy, interval, mergeMap, Subscription, toArray} from "rxjs";
 import {formatPeriod} from "../../shared/period";
-
-
 
 @Component({
   selector: 'app-expense-overview',
@@ -30,6 +28,15 @@ export class ExpenseListComponent {
   loading = false;
   searchCriteria: ExpenseCriteria = { page: 0, size: 25, yearMonth: +(this.datePipe.transform(this.currentMonth, 'yyyyMM'))!, sort: this.initialSort};
   readonly searchForm: FormGroup;
+  readonly sortOptions: SortOption[] = [
+    { label: 'Created at (newest first)', value: 'createdAt,desc' },
+    { label: 'Created at (oldest first)', value: 'createdAt,asc' },
+    { label: 'Date (newest first)', value: 'date,desc' },
+    { label: 'Date (oldest first)', value: 'date,asc' },
+    { label: 'Name (A-Z)', value: 'name,asc' },
+    { label: 'Name (Z-A)', value: 'name,desc' },
+  ];
+
   private readonly searchFormSubscription: Subscription;
 
   constructor(
@@ -48,6 +55,10 @@ export class ExpenseListComponent {
         });
   }
 
+
+  async ngOnInit(): Promise<void> {
+    await this.loadCategories();
+  }
   async loadCategories() {
     console.log("load");
     this.categoryService.getCategories(this.searchCriteria).subscribe({
