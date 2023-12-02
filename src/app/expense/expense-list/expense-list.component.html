@@ -5,6 +5,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
+      <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
     </ion-buttons>
     <ion-title>Expenses</ion-title>
   </ion-toolbar>
@@ -17,6 +18,7 @@
   <!-- Sort, Category & Search -->
   <ion-grid class="ion-padding">
     <ion-row>
+      <!-- Sort -->
       <ion-col size="12" size-sm="4">
         <ion-item>
           <ion-icon name="swap-vertical" slot="start"></ion-icon>
@@ -30,14 +32,18 @@
           </ion-select>
         </ion-item>
       </ion-col>
+      <!-- Category -->
       <ion-col size="12" size-sm="4">
         <ion-item>
           <ion-icon name="pricetag" slot="start"></ion-icon>
-          <ion-select interface="popover" placeholder="Category" [multiple]="true">
-            <ion-select-option>Test</ion-select-option>
+          <ion-select interface="popover" formControlName='categoryIds' placeholder="Category" [multiple]="true">
+            <ion-select-option *ngFor="let category of categories" [value]="category.id">
+              {{category.name}}
+            </ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
+      <!-- Search -->
       <ion-col size="12" size-sm="4">
         <ion-item>
           <ion-icon name="search" slot="start"></ion-icon>
@@ -48,14 +54,54 @@
   </ion-grid>
 
   <!-- Expenses list -->
-  <ion-list inset="true">
+  <ion-list [ngSwitch]="expenses.length" inset="true">
+<!-- Skeleton-->
+    <ng-container *ngSwitchCase="null">
+      <ion-item *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]">
+        <ion-label>
+          <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+        </ion-label>
+      </ion-item>
+    </ng-container>
 
-    <!-- Expenses -->
-    <ion-item button="true" [detail]="true" (click)="openModal()">
-      <ion-label>Test1</ion-label>
+    <ion-item *ngSwitchCase="0">
+      <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
+      <ion-label>No expenses found</ion-label>
     </ion-item>
 
+    <!-- Expenses -->
+    <ng-container *ngSwitchDefault>
+      <ion-item button="true" *ngFor='let expense of expenses' [detail]="true" [disabled]="loading" (click)="openModal(expense)">
+      <ion-grid>
+        <ion-item-divider>
+          {{expense.date}}
+        </ion-item-divider>
+        <ion-row>
+          <ion-col size="12" size-sm="4">
+            {{expense.name}}
+          </ion-col>
+          <ion-col size="12" size-sm="4" class="ion-text-center">
+            <ion-icon name="pricetag"></ion-icon>
+            {{expense.category.name}}
+          </ion-col>
+          <ion-col size="12" size-sm="4" class="ion-text-end">
+            {{expense.amount | currency}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      </ion-item>
+    </ng-container>
   </ion-list>
+
+  <!-- Infinite Scroll -->
+  <ion-infinite-scroll [disabled]="lastPageReached || loading" (ionInfinite)="loadNextExpensePage($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="reloadExpenses($event)" [disabled]="loading">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <!-- Create fab button -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
@@ -67,7 +113,7 @@
 </ion-content>
 <!-- Footer -->
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar slot="fixed">
     <ion-buttons slot="start">
       <ion-button (click)="changeMonth(-1)">
         <ion-icon name="arrow-back"></ion-icon>
