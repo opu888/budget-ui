@@ -37,8 +37,7 @@ export class ExpenseModalComponent {
   ) {
     this.expenseForm = this.formBuilder.group({
       id: [],
-      name: ['', [Validators.required, Validators.maxLength(40)]],
-      categoryId: [null],
+      name: ['', [Validators.required, Validators.maxLength(40)]], categoryId: [this.expense.category.id],
       date: [this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss')],
       amount: [''],
     })
@@ -46,6 +45,8 @@ export class ExpenseModalComponent {
 
     async ngOnInit(): Promise<void> {
         await this.loadCategories();
+        this.expense.categoryId = this.expense.category.id;
+
     }
     async loadCategories() {
         console.log("load");

@@ -59,6 +59,7 @@ export interface Expense {
   lastModifiedAt: string;
   amount: number;
   category: Category;
+  categoryId?: string;
   date: string;
   name: string;
 }
@@ -74,5 +75,9 @@ export interface ExpenseUpsertDto {
 export interface ExpenseCriteria extends PagingCriteria {
   categoryIds?: string;
   name?: string;
-  yearMonth?: string;
+  yearMonth?: number;
+}
+
+export interface AllExpenseCriteria extends SortCriteria {
+  name?: string;
 }

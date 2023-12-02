@@ -16,19 +16,13 @@
 <!-- ------- -->
 <ion-content>
   <!-- Sort, Category & Search -->
-  <ion-grid class="ion-padding">
+  <ion-grid class="ion-padding" [formGroup]="searchForm">
     <ion-row>
       <!-- Sort -->
       <ion-col size="12" size-sm="4">
         <ion-item>
           <ion-icon name="swap-vertical" slot="start"></ion-icon>
           <ion-select interface="popover" value="Date (newest first)">
-            <ion-select-option>Created at (newest first)</ion-select-option>
-            <ion-select-option>Created at (oldest first)</ion-select-option>
-            <ion-select-option>Name (A-Z)</ion-select-option>
-            <ion-select-option>Name (Z-A)</ion-select-option>
-            <ion-select-option>Date (newest first)</ion-select-option>
-            <ion-select-option>Date (oldest first)</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -116,15 +110,13 @@
   <ion-toolbar slot="fixed">
     <ion-buttons slot="start">
       <ion-button (click)="changeMonth(-1)">
-        <ion-icon name="arrow-back"></ion-icon>
+        <ion-icon slot="icon-only" name="arrow-back" role="img"></ion-icon>
       </ion-button>
     </ion-buttons>
-
-    <ion-title>{{ date | date:'MMMM yyyy' }}</ion-title>
-
+    <ion-title>{{ currentMonth | date: 'MMMM yyyy' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="changeMonth(1)">
-        <ion-icon name="arrow-forward"></ion-icon>
+        <ion-icon slot="icon-only" name="arrow-forward" role="img"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
