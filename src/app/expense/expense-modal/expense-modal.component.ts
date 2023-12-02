@@ -37,7 +37,7 @@ export class ExpenseModalComponent {
   ) {
     this.expenseForm = this.formBuilder.group({
       id: [],
-      name: ['', [Validators.required, Validators.maxLength(40)]], categoryId: [this.expense.category.id],
+      name: ['', [Validators.required, Validators.maxLength(40)]], categoryId: [this.expense.categoryId],
       date: [this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss')],
       amount: [''],
     })
