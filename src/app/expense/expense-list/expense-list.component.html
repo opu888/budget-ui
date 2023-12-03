@@ -15,6 +15,7 @@
 <!-- Content -->
 <!-- ------- -->
 <ion-content>
+  <ion-refresher slot='fixed' (ionRefresh)='reloadExpenses($event)' [disabled]='loading'></ion-refresher>
   <!-- Sort, Category & Search -->
   <ion-grid class="ion-padding" [formGroup]="searchForm">
     <ion-row>
@@ -33,7 +34,7 @@
       <ion-col size="12" size-sm="4">
         <ion-item>
           <ion-icon name="pricetag" slot="start"></ion-icon>
-          <ion-select interface="popover" formControlName='categoryIds' placeholder="Category" [multiple]="true">
+          <ion-select interface="popover" formControlName='categoryId' placeholder="Category" [multiple]="true">
             <ion-select-option *ngFor="let category of categories" [value]="category.id">
               {{category.name}}
             </ion-select-option>

@@ -12,6 +12,7 @@ import {DatePipe} from "@angular/common";
 import {IonDatetime} from "@ionic/angular";
 import {save} from "ionicons/icons";
 
+
 @Component({
   selector: 'app-expense-modal',
   templateUrl: './expense-modal.component.html',
@@ -25,7 +26,6 @@ export class ExpenseModalComponent {
   searchCriteria: CategoryCriteria = {page: 0, size: 25, sort: this.initialSort};
   categories: Category[] = [];
   datePipe = new DatePipe('en-US');
-
 
 
   constructor(
@@ -44,6 +44,8 @@ export class ExpenseModalComponent {
     })
 
   }
+
+
 
     async ngOnInit(): Promise<void> {
         await this.loadCategories();
@@ -110,10 +112,12 @@ export class ExpenseModalComponent {
         }
     }
 
-  async openCategoryModal(): Promise<void> {
+  async showCategoryModal(): Promise<void> {
     const categoryModal = await this.modalCtrl.create({ component: CategoryModalComponent });
     categoryModal.present();
     const { role } = await categoryModal.onWillDismiss();
     console.log('role', role);
   }
 }
+
+
